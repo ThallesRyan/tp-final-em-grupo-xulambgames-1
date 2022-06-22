@@ -32,7 +32,8 @@ private XulambGames referencia;
 		this.setReferencia(referencia);
 	}
 	
-	//Metodos gets/sets
+	//construtor da classe.
+//Metodos gets/sets
 public XulambGames getReferencia() {
 		return referencia;
 }
@@ -53,7 +54,7 @@ public void setTipoCLiente(char tipoCliente) {
 	this.tipoCliente=tipoCliente;
 }
 public void limparCarrinhoAtual() {
-	this.carrinhoAtual=null;
+	this.carrinhoAtual = new Carrinho(); ;
 }
 public String getNome() {
 	return this.nome;
@@ -72,6 +73,10 @@ public LinkedList<Carrinho> getHistoricoDeCompras(){
 }
 public Carrinho getCarrinhoAtual() {
 	return this.carrinhoAtual;
+}
+
+public void setHistoricoDeCompras(LinkedList<Carrinho> historicoDeCompras) {
+	this.historicoDeCompras = historicoDeCompras;
 }
 /*Metodo para iniciar a compra. Ele verifica se jï¿½ existe alguma compra inicializada, se nï¿½o,
  ele inicializa um carrinho e o coloca como compra atual
@@ -95,6 +100,17 @@ public void addJogo(Jogo novoJogo)throws Exception {
 	else {
 		throw new Exception("Compra nï¿½o inicializada");
 	}
+}
+
+public void removeJogo(String jogo) {
+	Jogo removido = null;
+	for(Jogo jg : this.carrinhoAtual.getJogos()) {
+		if(jg.getNome().equals(jogo)) {
+			removido = jg;
+		}
+	}
+	this.getCarrinhoAtual().getJogos().remove(removido);
+	
 }
 /* Metodo que finaliza a compra.Ele primeiro verifica se existe alguma compra pendente, se sim
  * ele adiciona o contador de vendas de seus respectivos jogos, atualiza o contador de vendas da 
@@ -120,7 +136,23 @@ public double finalizarCompra()throws Exception {
 }
 @Override
 public String toString() {
-	return ("nome do cliente: "+this.nome+"  Nome de Usuario: "+this.nomeUsuario);
+	
+	StringBuilder espacos = new StringBuilder("");
+	while(this.getNomeUsuario().length() + espacos.length() + 6 != 37) {
+		espacos.append(" ");
+	}
+	
+	return (this.getNomeUsuario() + espacos + "Normal\n");
 }
 
+public String relatorio() {
+	LinkedList<Carrinho> historico = this.getHistoricoDeCompras();
+	StringBuilder relatorio = new StringBuilder("");
+	relatorio.append("=== Histórico de "+ this.getNome() + " ===\n\n");
+	for(Carrinho carrinho : historico) {
+		relatorio.append(carrinho + "\n");
+	}
+	
+	return relatorio.toString();
+}
 }

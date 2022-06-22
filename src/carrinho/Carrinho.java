@@ -40,6 +40,8 @@ public class Carrinho implements Serializable {
 	public void setDataDeCompra(LocalDate dataDeCompra) {
 		this.dataDeCompra = dataDeCompra;
 	}
+	
+	
 	/*metodo usado para calcular o pre�o total do carrinho,
 	ele caminha todo uma lista de jogos e pega o pre�o de cada um e no final aplica a regra de
 	desconto. Para simplificar eu converti a regra de desconto para uma de pontua��o se tratei
@@ -86,10 +88,48 @@ public class Carrinho implements Serializable {
 	}
 	//metodo que adiciona um jogo para o carrinho para ser usado pelo cliente
 	public void addJogo(Jogo novoJogo) {
+		this.precoTotal=this.precoTotal+novoJogo.getPreco();
 		this.jogos.add(novoJogo);
 		calcularPrecoTotal();
 		this.totalDeJogos++;
 		
 	}
 	
+
+	public void removeJogo(String nome) {
+		Jogo JogoEncontrado = null;
+		for(Jogo jogo: this.jogos) {
+			if(jogo.getNome().trim().equals(nome.trim())) {
+				JogoEncontrado = jogo;
+			}
+		}
+		this.jogos.remove(JogoEncontrado);
+	}
+	
+	public String toString() {
+		StringBuilder relatorio = new StringBuilder("");
+		if(this.dataDeCompra != null) {
+			 relatorio.append("------- " + this.getDataDeCompra() + " -------\n");
+		}
+		relatorio.append("-- JOGOS --\n");
+		LinkedList<Jogo> jogos = this.getJogos();
+		for(Jogo jogo : jogos) {
+			relatorio.append(jogo.getNome() +"\n");		
+		}
+		relatorio.append("\nTotal da Compra : " + this.getPrecoTotal() + "\n\n---------------------------");
+		return relatorio.toString();
+	}
+	
+	public String exibirCarrinho() {
+		StringBuilder carrinho = new StringBuilder("");
+		
+		for(Jogo jogo : this.getJogos()) {
+			carrinho.append(jogo.getNome() + "\n");
+		}
+		carrinho.append(".........................\n");
+		carrinho.append("Total: "+this.getPrecoTotal());
+		return carrinho.toString();
+	}
+	
+
 }

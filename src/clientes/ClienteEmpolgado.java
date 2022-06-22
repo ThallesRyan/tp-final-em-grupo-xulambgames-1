@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import jogos.Jogo;
 import lojal.XulambGames;
 
-final class ClienteEmpolgado extends ClienteCadastrado {
+public final class ClienteEmpolgado extends ClienteCadastrado {
 	/**
 	 * 
 	 */
@@ -37,5 +37,13 @@ final class ClienteEmpolgado extends ClienteCadastrado {
 		else {
 			throw new Exception("carrinho não foi criado ainda");
 		}
+	}
+	@Override
+	public String toString() {
+		StringBuilder espacos = new StringBuilder("");
+		while(this.getNomeUsuario().length() + espacos.length() + 9 != 37) {
+			espacos.append(" ");
+		}
+		return (this.getNomeUsuario() + espacos + "Empolgado\n");
 	}
 }
