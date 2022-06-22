@@ -10,9 +10,7 @@ import java.util.TreeSet;
 
 import jogos.Jogo;
 public class XulambGames implements Serializable {
-/**
-	 * 
-	 */
+
 
 	private static final long serialVersionUID = -7141840469374892582L;
 	//atributos da classe
